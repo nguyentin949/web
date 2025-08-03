@@ -1,0 +1,997 @@
+/* -- Google Fonts -- */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* -- Variables (Biến CSS để dễ quản lý màu sắc, etc.) -- */
+:root {
+    --color-pink-neon: #ff0077;
+    --color-orange-neon: #ff4500;
+    --color-purple-neon: #a855f7;
+    --color-blue-neon: #1e90ff;
+    --color-green-neon: #32cd32;
+    --color-yellow-neon: #ffcc00;
+
+    --bg-gradient-start: #6a0dad;
+    --bg-gradient-end: #4b0082; /* Darker purple */
+    
+    --card-bg-light: rgba(255, 255, 255, 0.08); /* Transparent light for Glassmorphism */
+    --card-border-light: rgba(255, 255, 255, 0.2);
+    --text-color-dark: #333;
+    --text-color-light: #f0f0f0;
+}
+
+/* -- Reset & Global Styles -- */
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Nền gradient động */
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end), var(--color-purple-neon), var(--color-blue-neon));
+    background-size: 400% 400%; /* Kích thước lớn hơn để tạo hiệu ứng chuyển động */
+    animation: gradientShift 20s ease infinite; /* Animation chuyển động nền */
+    overflow: hidden;
+    position: relative;
+    color: var(--text-color-light);
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    cursor: default;
+}
+
+/* Keyframes cho nền gradient động */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* -- Particles.js Container -- */
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+/* -- Confetti Container & Styles -- */
+#confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    overflow: hidden;
+}
+
+.confetti {
+    position: absolute;
+    width: var(--size, 10px);
+    height: var(--size, 10px);
+    background-color: var(--color, #fff);
+    opacity: 0;
+    animation: fallAndRotate var(--duration, 3s) var(--delay, 0s) linear forwards;
+    pointer-events: none;
+    border-radius: var(--border-radius, 0);
+    /* Hiệu ứng lấp lánh cho confetti */
+    box-shadow: 0 0 5px var(--color, #fff), 0 0 10px var(--color, #fff);
+}
+
+@keyframes fallAndRotate {
+    0% { transform: translate(0, -100px) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    100% { 
+        transform: translate(var(--translateX, 0), 100vh) rotate(var(--rotate, 720deg)); 
+        opacity: 0;
+    }
+}
+
+/* -- Background Decorative Shapes (Các hình nền trang trí nhỏ) -- */
+.background-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.shape {
+    position: absolute;
+    opacity: 0.15; /* Hơi trong suốt */
+    filter: blur(2px); /* Làm mờ để trông mềm mại hơn */
+}
+
+.circle { border-radius: 50%; }
+.square {
+    /* Thêm hiệu ứng sáng nhẹ, màu sắc sẽ phụ thuộc vào background-color của hình đó */
+    box-shadow: 0 0 10px rgba(var(--current-color-r, 255), var(--current-color-g, 255), var(--current-color-b, 255), 0.2),
+                0 0 20px rgba(var(--current-color-r, 255), var(--current-color-g, 255), var(--current-color-b, 255), 0.1);
+    /* Lưu ý: Để cái này hoạt động tốt, bạn sẽ cần JS để cập nhật biến CSS --current-color-r/g/b dựa trên màu nền của hình vuông.
+       Nếu không có JS, nó sẽ dùng màu trắng mặc định hoặc màu bạn định nghĩa trong var().
+       Để đơn giản, bạn có thể dùng một màu cố định hoặc màu từ biến --color-neon đã định nghĩa. */
+}
+
+/* Ví dụ đơn giản hóa, dùng màu cố định cho shadow */
+.square {
+    box-shadow: 0 0 10px var(--color-yellow-neon), 0 0 20px var(--color-pink-neon);
+}
+.triangle { width: 0; height: 0; border-left: 50px solid transparent; border-right: 50px solid transparent; border-bottom: 100px solid; }
+
+/* Màu sắc cho các hình */
+.light-blue { background-color: #00bfff; border-bottom-color: #00bfff; }
+.pink { background-color: #ff69b4; border-bottom-color: #ff69b4; }
+.yellow { background-color: #ffd700; border-bottom-color: #ffd700; }
+.purple { background-color: #8a2be2; border-bottom-color: #8a2be2; }
+.green { background-color: #32cd32; border-bottom-color: #32cd32; }
+.orange { background-color: #ffa500; border-bottom-color: #ffa500; }
+
+
+/* Vị trí và animation cho từng hình */
+.anim-1 { top: 10%; left: 10%; width: 80px; height: 80px; animation: floatSpin 15s infinite linear; }
+.anim-2 { bottom: 15%; left: 5%; width: 100px; height: 100px; animation: floatSpinReverse 18s infinite linear; }
+.anim-3 { top: 5%; right: 20%; width: 60px; height: 60px; animation: floatSpin 12s infinite linear; }
+.anim-4 { bottom: 10%; right: 10%; width: 70px; height: 70px; animation: floatSpinReverse 16s infinite linear; }
+.anim-5 { top: 30%; left: 25%; width: 90px; height: 90px; animation: floatSpin 14s infinite linear; }
+.anim-6 { bottom: 5%; right: 25%; width: 110px; height: 110px; animation: floatSpinReverse 20s infinite linear; }
+
+@keyframes floatSpin {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(180deg); }
+    100% { transform: translateY(0) rotate(360deg); }
+}
+
+@keyframes floatSpinReverse {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(30px) rotate(-180deg); }
+    100% { transform: translateY(0) rotate(-360deg); }
+}
+
+
+/* -- Wrapper & Card -- */
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    z-index: 2;
+    perspective: 1000px;
+}
+
+.card.glassmorphism-card {
+    background: var(--card-bg-light);
+    backdrop-filter: blur(25px); /* Tăng độ mờ */
+    -webkit-backdrop-filter: blur(25px);
+    border: 2px solid var(--card-border-light); /* Viền dày hơn */
+    border-radius: 30px; /* Bo tròn hơn */
+    padding: 40px 30px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); /* Bóng đổ mạnh hơn */
+    position: relative;
+    max-width: 650px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-color-dark);
+    transform-style: preserve-3d;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    /* Hiệu ứng neon cho viền card */
+    box-shadow: 0 0 10px var(--color-pink-neon),
+                0 0 20px var(--color-orange-neon),
+                0 0 30px var(--color-purple-neon),
+                0 0 40px var(--color-blue-neon),
+                0 0 50px var(--color-green-neon);
+    animation: multiColorBorderGlow 3s infinite alternate;
+}
+
+@keyframes multiColorBorderGlow {
+    0% {
+        box-shadow: 0 0 10px var(--color-pink-neon),
+                    0 0 20px var(--color-orange-neon),
+                    0 0 30px transparent;
+    }
+    33% {
+        box-shadow: 0 0 10px var(--color-orange-neon),
+                    0 0 20px var(--color-purple-neon),
+                    0 0 30px transparent;
+    }
+    66% {
+        box-shadow: 0 0 10px var(--color-purple-neon),
+                    0 0 20px var(--color-blue-neon),
+                    0 0 30px transparent;
+    }
+    100% {
+        box-shadow: 0 0 10px var(--color-blue-neon),
+                    0 0 20px var(--color-green-neon),
+                    0 0 30px transparent;
+    }
+}
+
+
+.card.glassmorphism-card:hover {
+    transform: translateY(-8px) rotateX(2deg) scale(1.01); /* Tăng hiệu ứng hover */
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6),
+                0 0 20px var(--color-yellow-neon),
+                0 0 40px var(--color-pink-neon); /* Bóng đổ nhiều màu khi hover */
+}
+
+/* -- Headings & Text -- */
+.birthday-heading {
+    font-family: 'Dancing Script', cursive;
+    font-size: 6em; /* Lớn hơn nữa */
+    color: var(--color-yellow-neon); /* Màu vàng sáng */
+    margin-bottom: 5px;
+    font-weight: 700;
+    /* Hiệu ứng neon text */
+    text-shadow: 0 0 5px var(--color-pink-neon),
+                 0 0 10px var(--color-orange-neon),
+                 0 0 15px var(--color-yellow-neon),
+                 0 0 20px rgba(255, 255, 255, 0.5); /* Tạo lớp sáng trắng */
+    letter-spacing: 3px;
+    animation: textFlicker 1.5s infinite alternate; /* Hiệu ứng nhấp nháy chữ */
+}
+
+@keyframes textFlicker {
+    0%, 100% {
+        text-shadow: 0 0 5px var(--color-pink-neon), 0 0 10px var(--color-orange-neon), 0 0 15px var(--color-yellow-neon);
+    }
+    50% {
+        text-shadow: 0 0 8px var(--color-pink-neon), 0 0 18px var(--color-orange-neon), 0 0 25px var(--color-yellow-neon), 0 0 35px rgba(255, 255, 255, 0.7);
+    }
+}
+
+.celebrate-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2em; /* Lớn hơn */
+    color: var(--text-color-dark);
+    margin-top: 0;
+    margin-bottom: 40px;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.emoji.pulse {
+    display: inline-block;
+    animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); filter: drop-shadow(0 0 3px var(--color-pink-neon)); }
+    100% { transform: scale(1.2); filter: drop-shadow(0 0 8px var(--color-blue-neon)); } /* Thêm hiệu ứng sáng cho emoji */
+}
+
+.birthday-message {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4em; /* Lớn hơn */
+    line-height: 1.8; /* Khoảng cách dòng lớn hơn */
+    margin-top: 25px;
+    margin-bottom: 40px;
+    color: var(--text-color-dark);
+    font-weight: 500;
+    min-height: 6em; /* Đảm bảo đủ không gian cho hiệu ứng gõ chữ */
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+/* -- Profile Image -- */
+.profile-image-container {
+    width: 220px;
+    height: 220px;
+
+    overflow: hidden;
+    /* Xóa hoặc comment dòng này: */
+    /* border: 10px solid var(--color-yellow-neon); */
+    /* Xóa hoặc comment dòng này: */
+    /* box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); */
+    margin-bottom: 40px;
+    position: relative;
+    transform: translateZ(30px);
+    /* Xóa hoặc comment dòng này: */
+    /* animation: imageGlow 2s infinite alternate; */
+}
+
+@keyframes imageGlow {
+    0% { box-shadow: 0 0 15px var(--color-yellow-neon), 0 0 25px var(--color-pink-neon); }
+    100% { box-shadow: 0 0 20px var(--color-yellow-neon), 0 0 35px var(--color-blue-neon); }
+}
+
+/* Viền xoay nhiều màu cho ảnh */
+.profile-image-container::before {
+    content: '';
+    position: absolute;
+    top: -15px; /* Lớn hơn viền ảnh để tạo hiệu ứng lớp */
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+    border-radius: 50%;
+    background: conic-gradient(
+        var(--color-pink-neon) 0%, var(--color-orange-neon) 15%, var(--color-yellow-neon) 30%,
+        var(--color-green-neon) 45%, var(--color-blue-neon) 60%, var(--color-purple-neon) 75%,
+        var(--color-pink-neon) 100%
+    ); /* Gradient xoắn ốc nhiều màu */
+    z-index: -1;
+    animation: spin 8s linear infinite; /* Xoay liên tục */
+    filter: blur(8px); /* Làm mờ viền để trông ảo diệu hơn */
+    opacity: 0.8;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.profile-image:hover {
+    transform: scale(1.1); /* Phóng to hơn khi hover */
+}
+
+/* Hiệu ứng lấp lánh trên ảnh (Sparkle Overlay) */
+.sparkle-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                rgba(255, 255, 255, 0.4) 0%, transparent 70%); /* Sáng hơn */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: 50%; /* Đảm bảo overlay tròn */
+}
+.profile-image-container:hover .sparkle-overlay {
+    opacity: 1;
+}
+
+
+/* -- Decorative Icons (Các icon trang trí góc) -- */
+.decorative-icons {
+    position: absolute;
+    font-size: 4.5em; /* Lớn hơn */
+    color: var(--color-yellow-neon); /* Màu vàng neon */
+    opacity: 0.8;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    transform-style: preserve-3d;
+    filter: drop-shadow(0 0 5px var(--color-yellow-neon)); /* Thêm sáng */
+}
+
+.decorative-icons:hover {
+    transform: scale(1.3) rotateY(20deg); /* Hiệu ứng mạnh hơn */
+    opacity: 1;
+    filter: drop-shadow(0 0 15px var(--color-pink-neon)); /* Sáng mạnh hơn khi hover */
+}
+
+/* Hiệu ứng sáng nhấp nháy cho icon */
+.glowing-icon {
+    animation: iconGlow 2s infinite alternate;
+}
+
+@keyframes iconGlow {
+    0% { filter: drop-shadow(0 0 5px var(--color-yellow-neon)); }
+    50% { filter: drop-shadow(0 0 10px var(--color-blue-neon)); }
+    100% { filter: drop-shadow(0 0 5px var(--color-yellow-neon)); }
+}
+
+/* Vị trí và Animation riêng cho từng icon */
+.top-left { top: 25px; left: 25px; }
+.top-right { top: 25px; right: 25px; }
+.bottom-left { bottom: 25px; left: 25px; }
+.bottom-right { bottom: 25px; right: 25px; }
+
+.bounce { animation: bounce 4s infinite ease-in-out alternate; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
+
+.wobble { animation: wobble 5s infinite ease-in-out alternate; }
+@keyframes wobble {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-12deg); }
+    75% { transform: rotate(12deg); }
+}
+
+.swing { animation: swing 6s infinite ease-in-out alternate; }
+@keyframes swing {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(25deg); }
+}
+
+.spin { animation: spinFast 2.5s infinite linear; }
+@keyframes spinFast { to { transform: rotate(360deg); } }
+
+
+/* -- Music Button & Controls -- */
+.controls-area {
+    display: flex; /* Quan trọng: Sử dụng Flexbox */
+    flex-direction: row; /* Sắp xếp các mục theo hàng ngang (mặc định của flex) */
+    justify-content: center; /* Căn giữa các nút theo chiều ngang */
+    align-items: center; /* Căn giữa các nút theo chiều dọc */
+    gap: 15px; /* Khoảng cách giữa các nút */
+    margin-top: 30px;
+    position: relative;
+    z-index: 10;
+    flex-wrap: wrap; /* Cho phép các nút xuống dòng nếu không đủ chỗ trên màn hình nhỏ */
+}
+
+.music-button {
+    background: linear-gradient(45deg, var(--color-pink-neon), var(--color-orange-neon));
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 15px 35px;
+    font-size: 1.5em; /* Lớn hơn */
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 6px 20px rgba(255, 0, 119, 0.4);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700; /* Đậm hơn */
+    letter-spacing: 1.8px; /* Tăng khoảng cách chữ */
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    z-index: 1; /* Để hiệu ứng gợn sóng hoạt động */
+}
+
+.music-button:hover {
+    transform: translateY(-8px) scale(1.08); /* Hiệu ứng mạnh hơn */
+    box-shadow: 0 8px 30px rgba(255, 0, 119, 0.7),
+                0 0 20px var(--color-yellow-neon), /* Thêm sáng vàng */
+                0 0 40px var(--color-blue-neon); /* Thêm sáng xanh */
+}
+
+.music-button:active {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 15px rgba(255, 0, 119, 0.5);
+}
+
+/* Hiệu ứng neon cho nút */
+.neon-button {
+    animation: multiColorNeonButton 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes multiColorNeonButton {
+    0% {
+        box-shadow: 0 0 5px var(--color-pink-neon), 0 0 15px var(--color-orange-neon), 0 0 25px var(--color-purple-neon);
+    }
+    50% {
+        box-shadow: 0 0 10px var(--color-orange-neon), 0 0 20px var(--color-purple-neon), 0 0 30px var(--color-blue-neon);
+    }
+    100% {
+        box-shadow: 0 0 5px var(--color-purple-neon), 0 0 15px var(--color-blue-neon), 0 0 25px var(--color-green-neon);
+    }
+}
+
+.music-button i {
+    font-size: 1.4em;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none; /* Thêm cái này để tương thích tốt hơn */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent-color-2);
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: background 0.2s ease;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+    background: #ffd700; /* Vàng đậm hơn khi hover */
+}
+
+/* Thêm cho Firefox nếu cần */
+.volume-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent-color-2);
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: background 0.2s ease;
+}
+.volume-slider::-moz-range-thumb:hover {
+    background: #ffd700;
+}
+
+/* Thêm cho IE/Edge cũ nếu cần */
+.volume-slider::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent-color-2);
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: background 0.2s ease;
+}
+.volume-slider::-ms-thumb:hover {
+    background: #ffd700;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px; /* Lớn hơn */
+    height: 24px; /* Lớn hơn */
+    border-radius: 50%;
+    background: var(--color-yellow-neon); /* Màu vàng sáng */
+    cursor: grab; /* Con trỏ kéo */
+    box-shadow: 0 0 8px var(--color-yellow-neon), 0 0 15px rgba(0, 0, 0, 0.5); /* Sáng và bóng */
+    border: 2px solid white; /* Viền trắng */
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+    background: #ffd700;
+    box-shadow: 0 0 12px var(--color-yellow-neon), 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Thêm cho Firefox nếu cần */
+.volume-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--color-yellow-neon);
+    cursor: grab;
+    box-shadow: 0 0 8px var(--color-yellow-neon), 0 0 15px rgba(0, 0, 0, 0.5);
+    border: 2px solid white;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+.volume-slider::-moz-range-thumb:hover {
+    background: #ffd700;
+    box-shadow: 0 0 12px var(--color-yellow-neon), 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+
+/* -- Signature -- */
+.message-signature {
+    margin-top: 40px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8em; /* Lớn hơn */
+    color: var(--text-color-dark);
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 10px;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.signature-line {
+    width: 100px; /* Dài hơn */
+    height: 4px; /* Dày hơn */
+    background: linear-gradient(90deg, transparent, var(--color-pink-neon), var(--color-blue-neon), transparent); /* Gradient nhiều màu */
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    animation: fadeIn 2s ease-out forwards;
+    animation-delay: 1s;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* -- Responsive -- */
+@media (max-width: 768px) {
+    .card.glassmorphism-card {
+        padding: 30px 20px;
+        border-radius: 25px;
+    }
+    .birthday-heading {
+        font-size: 4.5em;
+    }
+    .celebrate-text {
+        font-size: 1.6em;
+    }
+    .birthday-message {
+        font-size: 1.2em;
+    }
+    .profile-image-container {
+        width: 180px;
+        height: 180px;
+        border-width: 8px;
+    }
+    .profile-image-container::before {
+        top: -12px;
+        left: -12px;
+        right: -12px;
+        bottom: -12px;
+        border-width: 10px;
+    }
+    .music-button {
+        font-size: 1.3em;
+        padding: 12px 28px;
+    }
+    .decorative-icons {
+        font-size: 3.5em;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+    }
+    .shape {
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 2em; /* Nếu dùng icon */
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    .card.glassmorphism-card {
+        padding: 25px 15px;
+        border-radius: 20px;
+    }
+    .birthday-heading {
+        font-size: 3.5em;
+    }
+    .celebrate-text {
+        font-size: 1.3em;
+    }
+    .birthday-message {
+        font-size: 1em;
+        min-height: 5em;
+    }
+    .profile-image-container {
+        width: 140px;
+        height: 140px;
+        border-width: 6px;
+    }
+    .profile-image-container::before {
+        top: -9px;
+        left: -9px;
+        right: -9px;
+        bottom: -9px;
+        border-width: 7px;
+    }
+    .music-button {
+        font-size: 1.1em;
+        padding: 10px 22px;
+    }
+    .volume-slider {
+        width: 90%;
+    }
+    .decorative-icons {
+        font-size: 3em;
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+    }
+    .message-signature {
+        font-size: 1.5em;
+    }
+    .shape {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 1.5em; /* Nếu dùng icon */
+    }
+}/* -- Responsive (Đảm bảo hiển thị tốt trên mọi thiết bị) -- */
+
+/* Cho màn hình từ 768px trở xuống (như iPad dọc, laptop nhỏ) */
+@media (max-width: 768px) {
+    .card.glassmorphism-card {
+        padding: 30px 20px;
+        border-radius: 25px;
+    }
+    .birthday-heading {
+        font-size: 4em; /* Thu nhỏ tiêu đề */
+    }
+    .celebrate-text {
+        font-size: 1.5em; /* Thu nhỏ chữ */
+        margin-bottom: 30px;
+    }
+    .birthday-message {
+        font-size: 1.1em; /* Thu nhỏ lời chúc */
+        min-height: 5em;
+        margin-bottom: 30px;
+    }
+    .profile-image-container {
+        width: 180px; /* Thu nhỏ ảnh */
+        height: 180px;
+        border-width: 8px;
+    }
+    .profile-image-container::before {
+        top: -12px;
+        left: -12px;
+        right: -12px;
+        bottom: -12px;
+        border-width: 10px;
+    }
+    .music-button {
+        font-size: 1.2em;
+        padding: 12px 28px;
+    }
+    .volume-slider {
+        width: 90%; /* Thanh trượt rộng hơn trên màn hình nhỏ */
+        max-width: 250px;
+    }
+    .decorative-icons {
+        font-size: 3.5em;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+    }
+    .message-signature {
+        font-size: 1.6em;
+        margin-top: 30px;
+    }
+    .shape { /* Các hình nền trang trí */
+        width: 70px !important;
+        height: 70px !important;
+        font-size: 2.5em; /* Nếu dùng icon thay thế shape div */
+        opacity: 0.1; /* Giảm độ mờ để ít gây chú ý hơn */
+    }
+    /* Điều chỉnh vị trí của các shape để tránh che nội dung */
+    .anim-1 { top: 5%; left: 5%; }
+    .anim-2 { bottom: 10%; left: 15%; }
+    .anim-3 { top: 10%; right: 5%; }
+    .anim-4 { bottom: 5%; right: 15%; }
+    .anim-5 { top: 20%; left: 20%; }
+    .anim-6 { bottom: 10%; right: 20%; }
+}
+@media (max-width: 600px) {
+    .controls-area {
+        flex-direction: column; /* Chuyển sang xếp dọc trên màn hình nhỏ */
+        gap: 15px;
+    }
+
+    .music-button,
+    .podcast-button {
+        width: 80%; /* Chiếm phần lớn chiều rộng trên mobile */
+        margin: 0 auto; /* Căn giữa nút */
+    }
+}
+
+/* Cho màn hình từ 480px trở xuống (như điện thoại thông minh) */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    .card.glassmorphism-card {
+        padding: 25px 15px;
+        border-radius: 20px;
+    }
+    .birthday-heading {
+        font-size: 3.5em; /* Rất lớn để nổi bật */
+        letter-spacing: 2px;
+    }
+    .celebrate-text {
+        font-size: 1.2em;
+        margin-bottom: 25px;
+    }
+    .birthday-message {
+        font-size: 0.95em;
+        line-height: 1.6;
+        min-height: 4em;
+        margin-bottom: 25px;
+    }
+    .profile-image-container {
+        width: 140px; /* Nhỏ hơn nữa */
+        height: 140px;
+        border-width: 6px;
+    }
+    .profile-image-container::before {
+        top: -9px;
+        left: -9px;
+        right: -9px;
+        bottom: -9px;
+        border-width: 7px;
+    }
+    .music-button,
+.podcast-button { /* Áp dụng chung cho cả hai nút */
+    /* ... (giữ nguyên các style hiện có cho nút music và podcast, ví dụ: background, color, padding, font, shadow, transition) ... */
+    display: flex; /* Để icon và text nằm ngang trong nút */
+    align-items: center; /* Căn giữa icon và text trong nút */
+    justify-content: center; /* Căn giữa nội dung trong nút */
+    white-space: nowrap; /* Ngăn không cho chữ xuống dòng trong nút */
+}
+    .music-button i,
+.podcast-button i {
+    margin-right: 8px; /* Khoảng cách giữa icon và text */
+}
+    .volume-slider {
+        width: 100%; /* Đầy đủ chiều rộng */
+        max-width: 200px;
+        height: 8px;
+    }
+    .volume-slider::-webkit-slider-thumb {
+        width: 20px;
+        height: 20px;
+    }
+    .decorative-icons {
+        font-size: 2.8em; /* Nhỏ hơn */
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+    }
+    .message-signature {
+        font-size: 1.3em;
+        margin-top: 25px;
+    }
+    .signature-line {
+        width: 80px;
+    }
+    .shape {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 2em;
+        opacity: 0.08; /* Rất mờ */
+    }
+    /* Điều chỉnh vị trí của các shape trên màn hình rất nhỏ */
+    .anim-1 { top: 3%; left: 3%; }
+    .anim-2 { bottom: 5%; left: 8%; }
+    .anim-3 { top: 7%; right: 3%; }
+    .anim-4 { bottom: 3%; right: 8%; }
+    .anim-5 { top: 15%; left: 10%; }
+    .anim-6 { bottom: 5%; right: 10%; }
+}
+/* ... (các đoạn code CSS hiện có) ... */
+
+/* Thêm class này vào cuối file hbbd.css */
+body.cream-theme {
+    background: linear-gradient(135deg, #FFFDD0, #F0EAD6, #FAEBD7, #F5DEB3); /* Các tông màu kem */
+    background-size: 400% 400%;
+    animation: gradientShift 20s ease infinite;
+    color: #333; /* Chữ màu tối để dễ đọc trên nền sáng */
+}
+
+/* Điều chỉnh màu chữ và các yếu tố khác khi có class cream-theme */
+body.cream-theme .birthday-heading,
+body.cream-theme .celebrate-text,
+body.cream-theme .birthday-message,
+body.cream-theme .message-signature {
+    color: #6A0DAD; /* Ví dụ đổi màu chữ thành màu tím đậm hơn */
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+body.cream-theme .card.glassmorphism-card {
+    background: rgba(255, 255, 255, 0.4); /* Nền card trong suốt hơn */
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    animation: none; /* Tắt animation border glow cũ nếu muốn */
+}
+
+body.cream-theme .card.glassmorphism-card:hover {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+body.cream-theme .birthday-heading {
+    color: #8A2BE2; /* Tông màu tím nhẹ cho tiêu đề chính */
+    text-shadow: 0 0 5px #B0E0E6, 0 0 10px #D8BFD8;
+    animation: none; /* Tắt hiệu ứng nhấp nháy chữ cũ nếu muốn */
+}
+
+body.cream-theme .profile-image-container {
+    border: 10px solid #DDA0DD; /* Viền ảnh màu tím nhạt */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    animation: none; /* Tắt animation glow cũ nếu muốn */
+}
+
+body.cream-theme .profile-image-container::before {
+    background: conic-gradient(
+        #D8BFD8 0%, #E0BBE4 15%, #957DAD 30%,
+        #6A0DAD 45%, #4A056A 60%, #300045 75%,
+        #D8BFD8 100%
+    );
+    filter: blur(5px);
+    opacity: 0.7;
+}
+
+body.cream-theme .music-button {
+    background: linear-gradient(45deg, #D8BFD8, #E0BBE4);
+    color: #6A0DAD;
+    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
+    animation: none; /* Tắt neon button animation cũ nếu muốn */
+}
+
+body.cream-theme .music-button:hover {
+    box-shadow: 0 8px 30px rgba(138, 43, 226, 0.7);
+}
+
+body.cream-theme .decorative-icons {
+    color: #8A2BE2; /* Màu icon tím */
+    filter: drop-shadow(0 0 5px #D8BFD8);
+    animation: none; /* Tắt glow animation cũ nếu muốn */
+}
+
+body.cream-theme .signature-line {
+    background: linear-gradient(90deg, transparent, #DDA0DD, #8A2BE2, transparent);
+}
+
+/* Các màu hạt particle, confetti, falling elements, sparkle cursor cần được điều chỉnh trong JS nếu bạn muốn chúng thay đổi theo theme */
+/* Hiện tại các hiệu ứng này sử dụng màu cứng trong JS, để thay đổi bạn cần điều chỉnh mảng màu trong script.js */
+/* -- Podcast Button Styles: Thiết kế Độc đáo -- */
+.podcast-button {
+    /* Nền gradient đa sắc và động */
+    background: linear-gradient(45deg, var(--color-blue-neon), var(--color-purple-neon), var(--color-pink-neon));
+    background-size: 200% 200%;
+    animation: gradientShiftButton 3s ease infinite alternate;
+
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 40px;
+    padding: 15px 35px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2em;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 0 10px var(--color-blue-neon), 0 0 20px var(--color-purple-neon), 0 0 30px var(--color-pink-neon);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+@keyframes gradientShiftButton {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.podcast-button i {
+    margin-right: 10px;
+    font-size: 1.4em;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+}
+
+.podcast-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 0 25px var(--color-blue-neon), 0 0 50px var(--color-purple-neon), 0 0 80px var(--color-pink-neon), 0 0 120px rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.8);
+    color: var(--color-yellow-neon);
+}
+
+.podcast-button:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 0 0 10px var(--color-blue-neon), 0 0 20px var(--color-purple-neon);
+}
+
+@media (max-width: 768px) {
+    .podcast-button {
+        font-size: 1.1em;
+        padding: 12px 28px;
+    }
+    .podcast-button i {
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 480px) {
+    .podcast-button {
+        font-size: 1em;
+        padding: 10px 22px;
+        letter-spacing: 1px;
+    }
+    .podcast-button i {
+        font-size: 1.1em;
+    }
+}

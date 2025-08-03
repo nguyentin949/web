@@ -1,0 +1,356 @@
+/* CSS riêng cho trang Podcast */
+/* -- Google Fonts -- */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* -- Variables (Biến CSS cho podcast.css) -- */
+:root {
+    /* Sử dụng lại các biến màu neon nếu cần thiết cho nền hoặc các yếu tố podcast */
+    --color-pink-neon: #ff0077;
+    --color-orange-neon: #ff4500;
+    --color-purple-neon: #a855f7;
+    --color-blue-neon: #1e90ff;
+    --color-green-neon: #32cd32;
+    --color-yellow-neon: #ffcc00;
+
+    /* Biến nền cụ thể cho podcast nếu muốn khác hbbd.css */
+    --podcast-bg-gradient-start: #6a0dad; /* Dark purple */
+    --podcast-bg-gradient-middle: #4b0082; /* Even darker purple */
+    --podcast-bg-gradient-end: #360052; /* Deepest purple */
+    
+    --card-bg-light: rgba(255, 255, 255, 0.1); /* Slightly more opaque for podcast card */
+    --card-border-light: rgba(255, 255, 255, 0.3);
+
+    --text-color-dark: #333;
+    --text-color-light: #f0f0f0;
+}
+
+/* -- Reset & Global Styles -- */
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    flex-direction: column; /* Thay đổi để bố cục dọc cho trang podcast */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('podcast.png'); /* ĐẶT HÌNH NỀN VÀO ĐÂY */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    /* Các dòng animation (nếu có) có thể bị xóa hoặc comment */
+    /* animation: gradientShift 20s ease infinite; */
+    overflow: hidden;
+    position: relative;
+    color: var(--text-color-dark);
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    cursor: default;
+}
+
+/* Keyframes cho nền gradient động (Đã sao chép từ hbbd.css) */
+/* Nếu bạn đã chọn background-color tĩnh cho body, các keyframe này sẽ không có tác dụng */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* -- Particles.js Container (Đã sao chép từ hbbd.css) -- */
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+/* -- Confetti Container & Styles (Đã sao chép từ hbbd.css) -- */
+#confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    overflow: hidden;
+}
+
+.confetti {
+    position: absolute;
+    width: var(--size, 10px);
+    height: var(--size, 10px);
+    background-color: var(--color, #fff);
+    opacity: 0;
+    animation: fallAndRotate var(--duration, 3s) var(--delay, 0s) linear forwards;
+    pointer-events: none;
+    border-radius: var(--border-radius, 0);
+    box-shadow: 0 0 5px var(--color, #fff), 0 0 10px var(--color, #fff);
+}
+
+@keyframes fallAndRotate {
+    0% { transform: translate(0, -100px) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    100% { 
+        transform: translate(var(--translateX, 0), 100vh) rotate(var(--rotate, 720deg)); 
+        opacity: 0;
+    }
+}
+
+/* -- Falling Elements Container & Styles (Đã sao chép từ script.js và đưa vào CSS) -- */
+.falling-element {
+    position: absolute;
+    font-size: var(--size, 1em);
+    color: var(--color, #fff);
+    top: var(--top, -10vh);
+    left: var(--left, 0);
+    opacity: 0;
+    pointer-events: none;
+    animation: fallAndDrift var(--duration, 8s) var(--delay, 0s) linear forwards;
+    filter: drop-shadow(0 0 3px var(--color, #fff));
+}
+
+@keyframes fallAndDrift {
+    0% { transform: translate(0, 0); opacity: 0; }
+    5% { opacity: 1; }
+    100% { transform: translate(var(--drift, 0), 110vh); opacity: 0; }
+}
+
+/* -- Cursor Sparkle Styles (Đã sao chép từ script.js và đưa vào CSS) -- */
+.cursor-sparkle {
+    position: absolute;
+    background-color: var(--color, #fff);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    animation: sparkleFadeOut var(--duration, 0.6s) ease-out forwards;
+    filter: drop-shadow(0 0 2px var(--color, #fff));
+    z-index: 9999; /* Đảm bảo luôn nằm trên cùng */
+}
+
+@keyframes sparkleFadeOut {
+    0% { transform: scale(0); opacity: 1; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* -- Specific Podcast Page Styles -- */
+.podcast-card {
+    background: rgba(255, 255, 255, 0.5); /* Tăng opacity để dễ đọc chữ đen */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 255, 255, 0.6); /* Tăng border opacity */
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 700px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.podcast-heading {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4em;
+    color: var(--color-purple-neon); /* Đổi màu heading để nổi bật trên nền kem */
+    margin-bottom: 20px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.2), 0 0 10px rgba(168, 85, 247, 0.5); /* Bóng đổ cho heading */
+}
+
+.podcast-intro {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: var(--text-color-dark); /* Chữ intro màu đen */
+    margin-bottom: 30px;
+    text-shadow: none; /* Xóa bóng đổ cho intro */
+}
+
+.podcast-list {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.podcast-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    margin-bottom: 15px;
+    padding: 20px;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.podcast-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--color-purple-neon); /* Đổi màu hover của item */
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+}
+
+.podcast-item h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5em;
+    color: var(--color-blue-neon); /* Đổi màu heading của item */
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Ẩn các dòng ban đầu và hiển thị dần */
+.sync-text-container {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5em; /* Kích thước chữ to hơn */
+    line-height: 1.6;
+    color: #000; /* Đổi màu chữ nội dung thành MÀU ĐEN */
+    text-shadow: none; /* Xóa bóng đổ */
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sync-text-container span {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    display: inline-block;
+    margin-right: 0.2em;
+}
+.sync-text-container span.visible {
+    opacity: 1;
+}
+
+.podcast-audio {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.back-button-podcast {
+    display: inline-block;
+    background: linear-gradient(45deg, var(--color-purple-neon), var(--color-blue-neon)); /* Thay đổi màu nút quay lại */
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 30px;
+    box-shadow: 0 5px 15px rgba(168, 85, 247, 0.4);
+    transition: all 0.3s ease;
+}
+.back-button-podcast:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(168, 85, 247, 0.7);
+}
+
+/* Responsive cho trang Podcast */
+@media (max-width: 768px) {
+    .podcast-heading {
+        font-size: 3em;
+    }
+    .podcast-intro {
+        font-size: 1em;
+    }
+    .podcast-item h3 {
+        font-size: 1.3em;
+    }
+    .podcast-item p {
+        font-size: 0.9em;
+    }
+    .sync-text-container {
+        font-size: 1em; /* Điều chỉnh kích thước chữ đồng bộ trên tablet */
+    }
+}
+@media (max-width: 480px) {
+    .podcast-heading {
+        font-size: 2.5em;
+    }
+    .podcast-card {
+        padding: 20px;
+    }
+    .podcast-item {
+        padding: 15px;
+    }
+    .podcast-item h3 {
+        font-size: 1.1em;
+    }
+    .sync-text-container {
+        font-size: 0.9em; /* Điều chỉnh kích thước chữ đồng bộ trên mobile */
+    }
+}
+/* ... (phần CSS trước đó của bạn) ... */
+
+/* Container cho hai nút để chúng nằm ngang (áp dụng cho cả podcast.html và loichucX.html) */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+/* Style chung cho các nút điều hướng (áp dụng cho back-button, next-button, và nav-button) */
+.back-button-podcast,
+.next-button-podcast,
+.nav-button { /* Thêm .nav-button vào đây */
+    display: inline-block;
+    background: linear-gradient(45deg, var(--color-purple-neon), var(--color-blue-neon)); /* Cùng màu cho cả 2 nút */
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(168, 85, 247, 0.4);
+    transition: all 0.3s ease;
+    margin-top: 0; /* Đặt lại margin-top về 0 vì đã có ở button-container */
+    margin-left: 0; /* Đảm bảo không có margin-left thừa */
+}
+
+/* Hiệu ứng hover cho các nút điều hướng */
+.back-button-podcast:hover,
+.next-button-podcast:hover,
+.nav-button:hover { /* Thêm .nav-button vào đây */
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(168, 85, 247, 0.7);
+}
+
+/* Style riêng cho body của loichuc1.html (để thay đổi hình nền) */
+body.loichuc1-body {
+    background-image: url('loichuc1.png') !important; 
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    color: #000; 
+}
+
+/* Style riêng cho body của loichuc2.html (để thay đổi hình nền) */
+body.loichuc2-body {
+    background-color: #FAEBD7 !important; /* Ví dụ: một màu kem khác cho loichuc2.html */
+    /* background-image: url('ten_anh_nen_rieng_cho_loichuc2.png') !important; */
+    /* background-size: cover !important; */
+    /* background-repeat: no-repeat !important; */
+    /* background-position: center center !important; */
+    color: #000;
+}
+
+
+/* Responsive chung cho các nút trong button-container */
+@media (max-width: 480px) {
+    .button-container {
+        flex-direction: column; /* Xếp dọc các nút trên mobile */
+        gap: 10px;
+    }
+    .back-button-podcast,
+    .next-button-podcast,
+    .nav-button {
+        width: 90%; /* Chiếm chiều rộng lớn hơn trên mobile */
+        margin: 0 auto; /* Căn giữa */
+    }
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Chúc Mừng Sinh Nhật Rực Rỡ! ✨</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <link rel="stylesheet" href="hbbd.css">
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <div id="confetti-container"></div>
+
+    <div class="background-shapes">
+        <div class="shape circle light-blue anim-1"></div>
+        <div class="shape square pink anim-2"></div>
+        <div class="shape triangle yellow anim-3"></div>
+        <div class="shape circle purple anim-4"></div>
+        <div class="shape square green anim-5"></div>
+        <div class="shape circle orange anim-6"></div>
+    </div>
+
+    <div class="wrapper">
+        <div class="card glassmorphism-card">
+            <h1 class="birthday-heading neon-text">Happy Birthday!</h1>
+            <p class="celebrate-text">Celebrate big today <span class="emoji pulse">🥳</span></p>
+
+           <div class="profile-image-container">
+                <a href="image_detail.html"> <img src="/hbd/tran.jpg" alt="Ảnh cá nhân của bạn bè" class="profile-image">
+                </a> <div class="sparkle-overlay"></div>
+            </div>
+
+            <div class="decorative-icons top-left bounce">
+                <i class="fas fa-gift glowing-icon"></i>
+            </div>
+            <div class="decorative-icons top-right wobble">
+                <i class="fas fa-cake-candles glowing-icon"></i>
+            </div>
+            <div class="decorative-icons bottom-left swing">
+                <i class="fas fa-balloon glowing-icon"></i>
+            </div>
+            <div class="decorative-icons bottom-right spin">
+                <i class="fas fa-star glowing-icon"></i>
+            </div>
+
+            <p class="birthday-message" id="birthdayMessage"></p>
+          <div class="controls-area">
+                <button id="musicButton" class="music-button neon-button">
+                    <i class="fas fa-play"></i> MUSIC!
+                </button>
+                <button id="podcastButton" class="podcast-button neon-button" onclick="window.location.href='podcast.html';">
+                    <i class="fas fa-microphone"></i> PODCAST
+                </button>
+            </div>
+
+            <audio id="backgroundMusic" loop>
+                <source src="background_music.mp3" type="audio/mpeg">
+            
+            </audio>
+
+            <div class="message-signature">
+                <div class="signature-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6a0dad, #4b0082, #a855f7, #1e90ff);
+    background-size: 400% 400%;
+    animation: gradientShift 20s ease infinite;
+    color: #f0f0f0;
+    text-align: center;
+    overflow: hidden;
+    flex-direction: column;
+    gap: 30px;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.gift-container {
+    position: relative;
+    cursor: pointer; 
+    perspective: 1000px;
+    transition: transform 0.3s ease-out;
+    text-decoration: none; 
+    display: block; 
+}
+
+.gift-container:hover {
+    transform: scale(1.05);
+}
+
+.gift-image {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 15px rgba(255, 204, 0, 0.8));
+    transition: transform 0.3s ease-out;
+}
+
+.gift-container:active .gift-image {
+    transform: scale(0.95);
+}
+
+.click-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotateY(0deg);
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5em;
+    color: #ffcc00;
+    text-shadow: 0 0 8px rgba(255, 0, 119, 0.7),
+                 0 0 15px rgba(255, 204, 0, 0.5);
+    font-weight: 700;
+    pointer-events: none; 
+    animation: textGlow 2s infinite alternate;
+    white-space: nowrap;
+}
+
+@keyframes textGlow {
+    0% { text-shadow: 0 0 8px rgba(255, 0, 119, 0.7), 0 0 15px rgba(255, 204, 0, 0.5); }
+    100% { text-shadow: 0 0 12px rgba(255, 0, 119, 1), 0 0 25px rgba(255, 204, 0, 0.8), 0 0 35px rgba(255, 255, 255, 0.4); }
+}
+
+.message-intro {
+    font-size: 1.5em;
+    font-weight: 500;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .gift-image {
+        width: 200px;
+        height: 200px;
+    }
+    .click-text {
+        font-size: 3em;
+    }
+    .message-intro {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .gift-image {
+        width: 180px;
+        height: 180px;
+    }
+    .click-text {
+        font-size: 2.5em;
+    }
+    .message-intro {
+        font-size: 1em;
+    }
+}
